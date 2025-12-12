@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.motivation.MotivationConstants
 import com.example.motivation.R
 import com.example.motivation.SecurityPreferences
 import com.example.motivation.databinding.ActivityUserBinding
@@ -16,6 +17,8 @@ import com.example.motivation.databinding.ActivityUserBinding
 class UserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserBinding
+    private lateinit var securityPreferences: SecurityPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +27,19 @@ class UserActivity : AppCompatActivity() {
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        securityPreferences = SecurityPreferences(applicationContext)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         setListeners()
+        verifyUserName()
+    }
+
+    private fun verifyUserName() {
+        securityPreferences.getString(MotivationConstants.KEY.PERSON_NAME)
     }
 
     private fun setListeners() {
@@ -41,11 +51,12 @@ class UserActivity : AppCompatActivity() {
     private fun handleSave() {
         try {
             val name = binding.editTextName.text.toString()
+
             if (name.isNotBlank() || name == R.string.whats_your_name.toString()) {
-                SecurityPreferences(applicationContext).storeString("USER_NAME", name)
+                securityPreferences.storeString(MotivationConstants.KEY.PERSON_NAME, name)
                 Toast.makeText(applicationContext, "Olá $name!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(applicationContext, MainActivity::class.java))
-                finish()
+//                finish()
             } else {
                 Toast.makeText(applicationContext, "Informe seu nome!", Toast.LENGTH_SHORT).show()
             }
