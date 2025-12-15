@@ -61,7 +61,7 @@ class UserActivity : AppCompatActivity() {
                 securityPreferences.storeString(MotivationConstants.KEY.PERSON_NAME, name)
                 Toast.makeText(applicationContext, "Olá $name!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(applicationContext, MainActivity::class.java))
-//                finish()
+                finish()
             } else {
                 Toast.makeText(applicationContext, "Informe seu nome!", Toast.LENGTH_SHORT).show()
             }
