@@ -9,10 +9,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.motivation.MotivationConstants
+import com.example.motivation.helper.MotivationConstants
 import com.example.motivation.R
-import com.example.motivation.SecurityPreferences
+import com.example.motivation.repository.SecurityPreferences
 import com.example.motivation.databinding.ActivityUserBinding
+import com.example.motivation.repository.PhraseRepository
 
 class UserActivity : AppCompatActivity() {
 
@@ -39,7 +40,11 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun verifyUserName() {
-        securityPreferences.getString(MotivationConstants.KEY.PERSON_NAME)
+        val name = securityPreferences.getString(MotivationConstants.KEY.PERSON_NAME)
+        if (name.isNotBlank()) {
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
+        }
     }
 
     private fun setListeners() {
