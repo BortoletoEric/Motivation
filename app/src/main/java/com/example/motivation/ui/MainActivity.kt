@@ -69,6 +69,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.imageHappy.setColorFilter(ContextCompat.getColor(this, R.color.black))
         binding.imageSunny.setColorFilter(ContextCompat.getColor(this, R.color.black))
 
+        val newFilter = when (id) {
+            R.id.image_all -> MotivationConstants.PHRASE.ALL
+            R.id.image_happy -> MotivationConstants.PHRASE.HAPPY
+            R.id.image_sunny -> MotivationConstants.PHRASE.SUNNY
+            else -> filter
+        }
+
+        if (filter != newFilter) {
+            filter = newFilter
+            refreshPhrase()
+        }
+
         when (id) {
             R.id.image_all -> {
                 filter = MotivationConstants.PHRASE.ALL
