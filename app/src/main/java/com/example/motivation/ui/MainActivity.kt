@@ -18,8 +18,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var securityPreferences: SecurityPreferences
     private lateinit var phraseRepository: PhraseRepository
-    private var filter: Int = 0
-    private val listId = listOf(R.id.imageViewAll, R.id.imageViewHappy, R.id.imageViewSunny)
+    private var filter: Int = MotivationConstants.PHRASE.ALL
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         setListeners()
         getUserName()
+        handleFilter(R.id.image_all)
         refreshPhrase()
     }
 
@@ -48,40 +48,48 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.textViewHello.text = "Olá, $name!"
     }
 
-    private fun handleNewPhrase() {
-        TODO("Not yet implemented")
-    }
+    override fun onClick(view: View) {
+        val id: Int = view.id
 
-    override fun onClick(v: View) {
-        if (v.id == R.id.btnNewPhrase) {
-            handleNewPhrase()
-        } else if (v.id in listId) {
-            handleFilter(v.id)
+        val listId = listOf(
+            R.id.image_all,
+            R.id.image_happy,
+            R.id.image_sunny
+        )
+        if (id in listId) {
+            handleFilter(id)
+        } else if (id == R.id.button_new_phrase) {
+            refreshPhrase()
         }
     }
 
     private fun handleFilter(id: Int) {
+
+        binding.imageAll.setColorFilter(ContextCompat.getColor(this, R.color.black))
+        binding.imageHappy.setColorFilter(ContextCompat.getColor(this, R.color.black))
+        binding.imageSunny.setColorFilter(ContextCompat.getColor(this, R.color.black))
+
         when (id) {
-            R.id.imageViewAll -> {
+            R.id.image_all -> {
                 filter = MotivationConstants.PHRASE.ALL
-                binding.imageViewSunny.setColorFilter(ContextCompat.getColor(this, R.color.white))
+                binding.imageAll.setColorFilter(ContextCompat.getColor(this, R.color.white))
             }
-            R.id.imageViewHappy -> {
+            R.id.image_happy -> {
                 filter = MotivationConstants.PHRASE.HAPPY
-                binding.imageViewHappy.setColorFilter(ContextCompat.getColor(this, R.color.white))
+                binding.imageHappy.setColorFilter(ContextCompat.getColor(this, R.color.white))
             }
-            R.id.imageViewSunny -> {
+            R.id.image_sunny -> {
                 filter = MotivationConstants.PHRASE.SUNNY
-                binding.imageViewSunny.setColorFilter(ContextCompat.getColor(this, R.color.white))
+                binding.imageSunny.setColorFilter(ContextCompat.getColor(this, R.color.white))
             }
         }
     }
 
     private fun setListeners() {
-        binding.btnNewPhrase.setOnClickListener {this}
-        binding.imageViewAll.setOnClickListener {this}
-        binding.imageViewHappy.setOnClickListener {this}
-        binding.imageViewSunny.setOnClickListener {this}
+        binding.buttonNewPhrase.setOnClickListener (this)
+        binding.imageAll.setOnClickListener (this)
+        binding.imageHappy.setOnClickListener (this)
+        binding.imageSunny.setOnClickListener (this)
         phraseRepository = PhraseRepository()
     }
 }
