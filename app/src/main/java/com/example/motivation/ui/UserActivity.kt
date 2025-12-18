@@ -57,7 +57,7 @@ class UserActivity : AppCompatActivity() {
         try {
             val name = binding.editTextName.text.toString()
 
-            if (name.isNotBlank() || name == R.string.whats_your_name.toString()) {
+            if (name.isNotBlank() || name == R.string.hint_your_name.toString()) {
                 securityPreferences.storeString(MotivationConstants.KEY.PERSON_NAME, name)
                 Toast.makeText(applicationContext, "Olá $name!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(applicationContext, MainActivity::class.java))

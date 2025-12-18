@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textSize="24dp"
-        android:hint="@string/whats_your_name"
+        android:hint="@string/hint_your_name"
         android:textColor="@color/white"
         android:textColorHint="@color/white"/>
 
