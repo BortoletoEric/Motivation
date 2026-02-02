@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             insets
         }
         setListeners()
-        getUserName()
+        greetingUser()
         handleFilter(R.id.image_all)
         refreshPhrase()
     }
@@ -44,9 +44,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.textViewPhrase.text = phraseRepository.getPhrase(filter, Locale.getDefault().language)
     }
 
-    private fun getUserName() {
+    private fun greetingUser() {
         val name = SecurityPreferences(applicationContext).getString(MotivationConstants.KEY.PERSON_NAME)
-        binding.textViewHello.text = "Olá, $name!"
+        val localeLanguage = Locale.getDefault().language
+        when (localeLanguage) {
+            MotivationConstants.LANGUAGE.PORTUGUESE -> {
+                binding.textViewHello.text = "Olá, $name!"
+            }
+            MotivationConstants.LANGUAGE.ENGLISH -> {
+                binding.textViewHello.text = "Hello, $name!"
+            }
+            MotivationConstants.LANGUAGE.FRENCH -> {
+                binding.textViewHello.text = "Bonjour, $name!"
+            }
+            else -> {
+                binding.textViewHello.text = "Olá, $name!"
+            }
+        }
     }
 
     override fun onClick(view: View) {
