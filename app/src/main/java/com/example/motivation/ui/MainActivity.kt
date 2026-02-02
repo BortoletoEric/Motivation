@@ -12,6 +12,7 @@ import com.example.motivation.repository.PhraseRepository
 import com.example.motivation.R
 import com.example.motivation.repository.SecurityPreferences
 import com.example.motivation.databinding.ActivityMainBinding
+import java.util.Locale
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun refreshPhrase() {
-        binding.textViewPhrase.text = phraseRepository.getPhrase(filter)
+        binding.textViewPhrase.text = phraseRepository.getPhrase(filter, Locale.getDefault().language)
     }
 
     private fun getUserName() {
